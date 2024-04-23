@@ -1,0 +1,14 @@
+main: mc.mythofy.mythofyhub.MythofyHub
+name: MythofyHub
+version: 1.0.0
+description: Hub plugin.
+api-version: 1.20
+author: Mythofy Dev
+depend: [PlaceholderAPI, MythofyCommands]
+commands:
+  fly:
+    description: Fly command.
+  lightningstick:
+    description: Lightning Sticks command.
+  buildmode:
+    description: Buildmode command.
