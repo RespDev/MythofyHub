@@ -5,6 +5,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import mc.mythofy.mythofycommands.MythofyCommands;
 import mc.mythofy.mythofyhub.commands.BuildmodeCommand;
 import mc.mythofy.mythofyhub.commands.FlyCommand;
 import mc.mythofy.mythofyhub.commands.LightningSticksCommand;
@@ -45,18 +46,21 @@ public class MythofyHub extends JavaPlugin {
 		bossbar.createBossbar();
 		registerCommands();
 		registerListeners();
+		MythofyCommands.logMessage("Hub", "Enabled");
 	}
 	
 	@Override
 	public void onDisable() {
 		// Unload Plugin
 		bossbar.getBossbar().removeAll();
+		MythofyCommands.logMessage("Hub", "Disabled");
 	}
 	
 	private void registerCommands() {
 		this.getCommand("fly").setExecutor(new FlyCommand());
 		this.getCommand("lightningstick").setExecutor(new LightningSticksCommand());
 		this.getCommand("buildmode").setExecutor(new BuildmodeCommand());
+		MythofyCommands.logMessage("Hub", "Commands registered");
 	}
 	
 	private void registerListeners() {
@@ -69,6 +73,7 @@ public class MythofyHub extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new InventoryClickListener(), this);
 		Bukkit.getPluginManager().registerEvents(new JoinListener(), this);
 		Bukkit.getPluginManager().registerEvents(new BlockListener(), this);
+		MythofyCommands.logMessage("Hub", "Listeners registered");
 	}
 	
 	private void startScoreboardUpdater() {
