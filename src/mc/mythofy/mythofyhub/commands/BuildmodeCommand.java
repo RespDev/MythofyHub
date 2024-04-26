@@ -13,19 +13,17 @@ public class BuildmodeCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		if (label.equalsIgnoreCase("buildmode")) {
-			if (!(sender instanceof Player)) return true;
-			Player p = (Player) sender;
-			Rank rank = RankManager.getRank(p.getUniqueId());
-			
-			if (rank.getRankId() >= Rank.ADMIN.getRankId()) {
-				BlockListener.toggleBuild(p);
-			}
-			else {
-				p.sendMessage(ChatColor.RED + "No permission!");
-				return true;
-			}
+		if (!(sender instanceof Player))
+			return true;
+		Player p = (Player) sender;
+		Rank rank = RankManager.getRank(p.getUniqueId());
+
+		if (rank.getRankId() >= Rank.ADMIN.getRankId()) {
+			BlockListener.toggleBuild(p);
+		} else {
+			p.sendMessage(ChatColor.RED + "No permission!");
+
 		}
-		return false;
+		return true;
 	}
 }

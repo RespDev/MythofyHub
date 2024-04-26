@@ -14,48 +14,40 @@ import mc.mythofy.mythofycommands.rank.Rank;
 import mc.mythofy.mythofycommands.rank.RankManager;
 
 public class LightningSticksCommand implements CommandExecutor {
-	
+
 	ItemStack ls;
-	
+
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String name, String[] args) {
-		if (!(sender instanceof Player)) return true;
-		
-		if (name.equalsIgnoreCase("lightningstick")) {
-			Player p = (Player) sender;
-			UUID uuid = p.getUniqueId();
-			
-			if (RankManager.getRank(uuid).getRankId() >= Rank.ADMIN.getRankId()) {
-				if (args.length > 0) {
-					createLightningStick();
-					if (args[0].equalsIgnoreCase("all")) {
-						Bukkit.getOnlinePlayers().forEach(player -> player.getInventory().addItem(ls));
-						p.sendMessage(ChatColor.GREEN + "Everyone has been given a lightning stick!");
-						return true;
-					}
-					if (args[0].equalsIgnoreCase("me")) {
-						p.getInventory().addItem(ls);
-						p.sendMessage(ChatColor.GREEN + "You have been given a lightning stick!");
-						return true;
-					}
-					p.sendMessage(ChatColor.RED + "Usage:");
-					p.sendMessage(ChatColor.RED + "/lightningstick all");
-					p.sendMessage(ChatColor.RED + "/lightningstick me");
-					return true;
+		if (!(sender instanceof Player))
+			return true;
+
+		Player p = (Player) sender;
+		UUID uuid = p.getUniqueId();
+
+		if (RankManager.getRank(uuid).getRankId() >= Rank.ADMIN.getRankId()) {
+			if (args.length > 0) {
+				createLightningStick();
+				if (args[0].equalsIgnoreCase("all")) {
+					Bukkit.getOnlinePlayers().forEach(player -> player.getInventory().addItem(ls));
+					p.sendMessage(ChatColor.GREEN + "Everyone has been given a lightning stick!");
 				}
-				else {
-					p.sendMessage(ChatColor.RED + "Usage:");
-					p.sendMessage(ChatColor.RED + "/lightningstick all");
-					p.sendMessage(ChatColor.RED + "/lightningstick me");
-					return true;
+				if (args[0].equalsIgnoreCase("me")) {
+					p.getInventory().addItem(ls);
+					p.sendMessage(ChatColor.GREEN + "You have been given a lightning stick!");
 				}
+				p.sendMessage(ChatColor.RED + "Usage:");
+				p.sendMessage(ChatColor.RED + "/lightningstick all");
+				p.sendMessage(ChatColor.RED + "/lightningstick me");
+			} else {
+				p.sendMessage(ChatColor.RED + "Usage:");
+				p.sendMessage(ChatColor.RED + "/lightningstick all");
+				p.sendMessage(ChatColor.RED + "/lightningstick me");
 			}
-			else {
-				p.sendMessage(ChatColor.RED + "You must be admin or higher to execute this command!");
-				return true;
-			}
+		} else {
+			p.sendMessage(ChatColor.RED + "You must be admin or higher to execute this command!");
 		}
-		return false;
+		return true;
 	}
 
 	private void createLightningStick() {
@@ -63,7 +55,7 @@ public class LightningSticksCommand implements CommandExecutor {
 		ItemMeta meta = lightningStick.getItemMeta();
 		meta.setDisplayName(ChatColor.GREEN + "Lightning Stick");
 		lightningStick.setItemMeta(meta);
-		
+
 		ls = lightningStick;
 	}
 }
