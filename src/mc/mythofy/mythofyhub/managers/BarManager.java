@@ -45,7 +45,7 @@ public class BarManager {
 					bossbar.setTitle(ChatColor.AQUA + "" + ChatColor.BOLD + "MYTHOFY - FACTIONS");
 					break;
 				case 3:
-					bossbar.setTitle(ChatColor.GREEN + "" + ChatColor.BOLD + "MYTHOFY - CREATIVE");
+					bossbar.setTitle(ChatColor.GREEN + "" + ChatColor.BOLD + "MYTHOFY - LIFESTEAL");
 					break;
 				case 4:
 					bossbar.setTitle(ChatColor.GOLD + "" + ChatColor.BOLD + "MYTHOFY - MINIGAMES BETA");
