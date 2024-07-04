@@ -3,6 +3,7 @@ package mc.mythofy.mythofyhub.listeners;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -19,27 +20,28 @@ public class JoinListener implements Listener {
 	
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onJoin(PlayerJoinEvent j) {
-		Player p = (Player) j.getPlayer();
+		Location spawn = (Location) MythofyHub.getInstance().getConfig().get("spawn");
+		Player player = (Player) j.getPlayer();
 		
 		// Important Join Stuff
-		p.setGameMode(GameMode.SURVIVAL);
-		MythofyHub.bar().addPlayer(p);
+		player.setGameMode(GameMode.SURVIVAL);
+		MythofyHub.bar().addPlayer(player);		
+		if (spawn != null) player.teleport(spawn);
 		
 		// Join Message
-		
 		Bukkit.getScheduler().runTaskLater(MythofyHub.getInstance(), new Runnable() {
 			@Override
 			public void run() {
-				for (int i = 0; i < 150; i++) p.sendMessage(" ");
-				p.sendMessage(ChatColor.AQUA + "-----------------------------------------------");
-				p.sendMessage("");
-				p.sendMessage(ChatColor.GRAY + "                       Welcome to " + ChatColor.GOLD + "" + ChatColor.BOLD + "Mythofy" + ChatColor.RESET + ChatColor.GRAY + "!");
-				p.sendMessage(ChatColor.GRAY + "    Use the Game Selector in your hotbar to select a game.");
-				p.sendMessage("");
-				p.sendMessage(ChatColor.GRAY + "         Join our discord by typing /discord in chat.");
-				p.sendMessage(ChatColor.GRAY + "            Purchase ranks at " + ChatColor.GOLD + "store.mythofy.net!");
-				p.sendMessage("");
-				p.sendMessage(ChatColor.AQUA + "-----------------------------------------------");
+				for (int i = 0; i < 150; i++) player.sendMessage(" ");
+				player.sendMessage(ChatColor.AQUA + "-----------------------------------------------");
+				player.sendMessage("");
+				player.sendMessage(ChatColor.GRAY + "                       Welcome to " + ChatColor.GOLD + "" + ChatColor.BOLD + "Mythofy" + ChatColor.RESET + ChatColor.GRAY + "!");
+				player.sendMessage(ChatColor.GRAY + "    Use the Game Selector in your hotbar to select a game.");
+				player.sendMessage("");
+				player.sendMessage(ChatColor.GRAY + "         Join our discord by typing /discord in chat.");
+				player.sendMessage(ChatColor.GRAY + "            Purchase ranks at " + ChatColor.GOLD + "store.mythofy.net!");
+				player.sendMessage("");
+				player.sendMessage(ChatColor.AQUA + "-----------------------------------------------");
 			}
 		}, 15);
 			
@@ -67,10 +69,10 @@ public class JoinListener implements Listener {
 		ItemStack arrow = new ItemStack(Material.ARROW);
 		
 		// Inventory
-		p.getInventory().clear();
-		p.getInventory().setItem(0, gameSelector);
-		p.getInventory().setItem(3, tele);
-		p.getInventory().setItem(6, cosmeticSelector);
-		p.getInventory().setItem(9, arrow);
+		player.getInventory().clear();
+		player.getInventory().setItem(0, gameSelector);
+		player.getInventory().setItem(3, tele);
+		player.getInventory().setItem(6, cosmeticSelector);
+		player.getInventory().setItem(9, arrow);
 	}
 }

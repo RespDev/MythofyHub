@@ -1,25 +1,17 @@
 package mc.mythofy.mythofyhub;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
-
 import mc.mythofy.mythofycommands.MythofyCommands;
-import mc.mythofy.mythofyhub.commands.BuildmodeCommand;
-import mc.mythofy.mythofyhub.commands.FlyCommand;
-import mc.mythofy.mythofyhub.commands.LightningSticksCommand;
-import mc.mythofy.mythofyhub.listeners.ArrowListener;
-import mc.mythofy.mythofyhub.listeners.BlockListener;
-import mc.mythofy.mythofyhub.listeners.ClickListener;
-import mc.mythofy.mythofyhub.listeners.DamageListener;
-import mc.mythofy.mythofyhub.listeners.DropListener;
-import mc.mythofy.mythofyhub.listeners.HungerListener;
-import mc.mythofy.mythofyhub.listeners.InventoryClickListener;
-import mc.mythofy.mythofyhub.listeners.ItemMoveListener;
-import mc.mythofy.mythofyhub.listeners.JoinListener;
+import mc.mythofy.mythofyhub.commands.*;
+import mc.mythofy.mythofyhub.listeners.*;
 import mc.mythofy.mythofyhub.managers.BarManager;
 import mc.mythofy.mythofyhub.managers.SidebarManager;
+import network.palace.core.command.CoreCommand;
 
 public class MythofyHub extends JavaPlugin {
 	
@@ -57,22 +49,22 @@ public class MythofyHub extends JavaPlugin {
 	}
 	
 	private void registerCommands() {
-		this.getCommand("fly").setExecutor(new FlyCommand());
-		this.getCommand("lightningstick").setExecutor(new LightningSticksCommand());
-		this.getCommand("buildmode").setExecutor(new BuildmodeCommand());
+		registerCommand(new LightningSticksCommand());
+		registerCommand(new BuildmodeCommand());
+		registerCommand(new SetSpawnCommand());
 		MythofyCommands.logMessage("Hub", "Commands registered");
 	}
 	
 	private void registerListeners() {
-		Bukkit.getPluginManager().registerEvents(new ArrowListener(), this);
-		Bukkit.getPluginManager().registerEvents(new ClickListener(), this);
-		Bukkit.getPluginManager().registerEvents(new DropListener(), this);
-		Bukkit.getPluginManager().registerEvents(new HungerListener(), this);
-		Bukkit.getPluginManager().registerEvents(new DamageListener(), this);
-		Bukkit.getPluginManager().registerEvents(new ItemMoveListener(), this);
-		Bukkit.getPluginManager().registerEvents(new InventoryClickListener(), this);
-		Bukkit.getPluginManager().registerEvents(new JoinListener(), this);
-		Bukkit.getPluginManager().registerEvents(new BlockListener(), this);
+		registerListener(new ArrowListener());
+		registerListener(new ClickListener());
+		registerListener(new DropListener());
+		registerListener(new HungerListener());
+		registerListener(new DamageListener());
+		registerListener(new ItemMoveListener());
+		registerListener(new InventoryClickListener());
+		registerListener(new JoinListener());
+		registerListener(new BlockListener());
 		MythofyCommands.logMessage("Hub", "Listeners registered");
 	}
 	
@@ -89,9 +81,22 @@ public class MythofyHub extends JavaPlugin {
 		}, 20L, 60L);
 	}
 	
+    public void setSpawn(Location loc) {
+        config.set("spawn", loc);
+        plugin.saveConfig();
+    }
+	
 	public static BarManager bar() {
 		return bossbar;
 	}
+	
+	private void registerCommand(CoreCommand cmd) {
+		MythofyCommands.getInstance().registerCommand(cmd);
+	}
+	
+    private void registerListener(Listener listener) {
+        Bukkit.getPluginManager().registerEvents(listener, getInstance());
+    }
 	
 	public static MythofyHub getInstance() {
 		return plugin;

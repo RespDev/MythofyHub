@@ -5,10 +5,3 @@ description: Hub plugin.
 api-version: 1.13
 author: Mythofy Dev
 depend: [PlaceholderAPI, MythofyCommands]
-commands:
-  fly:
-    description: Fly command.
-  lightningstick:
-    description: Lightning Sticks command.
-  buildmode:
-    description: Buildmode command.

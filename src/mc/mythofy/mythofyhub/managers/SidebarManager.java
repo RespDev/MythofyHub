@@ -14,18 +14,13 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
-import mc.mythofy.mythofycommands.data.Storage;
+import mc.mythofy.mythofycommands.data.Currency;
 import mc.mythofy.mythofycommands.rank.Rank;
 import mc.mythofy.mythofycommands.rank.RankManager;
 import mc.mythofy.mythofyhub.MythofyHub;
 import me.clip.placeholderapi.PlaceholderAPI;
 
 public class SidebarManager implements Listener {
-
-	public static String createSpace() {
-		String space = ChatColor.WHITE + " " + ChatColor.translateAlternateColorCodes('&', "&f&b &d &c");
-		return space;
-	}
 
 	public static void refreshBoard(Player p) {
 		ScoreboardManager SbManager = Bukkit.getScoreboardManager();
@@ -36,7 +31,7 @@ public class SidebarManager implements Listener {
 
 		UUID uuid = p.getUniqueId();
 		Rank rank = RankManager.getRank(uuid);
-		Integer gems = Storage.getGems(uuid);
+		Integer gems = Currency.getGems(uuid);
 
 		Integer index = 9;
 		String players = PlaceholderAPI.setPlaceholders(p, "%bungee_total%");
@@ -52,7 +47,7 @@ public class SidebarManager implements Listener {
 		index--;
 
 		// Rank
-		Score DisplayRank = Obj.getScore(ChatColor.WHITE + "Rank: " + rank.getColor() + rank.getTabName());
+		Score DisplayRank = Obj.getScore(ChatColor.WHITE + "Rank: " + rank.getScoreboardName());
 		DisplayRank.setScore(index);
 		index--;
 
@@ -77,7 +72,7 @@ public class SidebarManager implements Listener {
 		index--;
 
 		// Space
-		Score Space3 = Obj.getScore(createSpace());
+		Score Space3 = Obj.getScore(ChatColor.translateAlternateColorCodes('&', "&f&b &d &c"));
 		Space3.setScore(index);
 		index--;
 

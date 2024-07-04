@@ -21,25 +21,26 @@ public class GuiManager {
 	public static void createServerSelector(Player p) {
 		selector = Bukkit.createInventory(null, 27, ChatColor.DARK_GRAY + "Server Selector");
 
-		// Factions item
-		ItemStack factions = new ItemStack(Material.DIAMOND_SWORD);
-		ItemMeta meta = factions.getItemMeta();
+		// Lifesteal Gamemode
+		ItemStack lifesteal = new ItemStack(Material.GRASS);
+		ItemMeta meta = lifesteal.getItemMeta();
 
-		String players = PlaceholderAPI.setPlaceholders(p, "%bungee_factions%");
+		String lifestealPlayers = PlaceholderAPI.setPlaceholders(p, "%bungee_lifesteal%");
 
-		meta.setDisplayName("" + ChatColor.AQUA + ChatColor.BOLD + "Factions");
+		meta.setDisplayName("" + ChatColor.AQUA + ChatColor.BOLD + "Lifesteal");
 		List<String> lore = new ArrayList<String>();
 		lore.add(ChatColor.GRAY + "");
-		lore.add(ChatColor.GRAY + "Our unique take on the Factions gamemode!");
+		lore.add(ChatColor.GRAY + "Our unique take on the Lifesteal gamemode!");
+		lore.add(ChatColor.GRAY + "Fun SMP with hearts, events, and much more.");
 		lore.add(ChatColor.GRAY + "");
-		lore.add(ChatColor.GRAY + "Players: " + ChatColor.AQUA + players);
+		lore.add(ChatColor.GRAY + "Players: " + ChatColor.AQUA + lifestealPlayers);
 		lore.add(ChatColor.GRAY + "Version: " + ChatColor.AQUA + "1.7-1.20.4");
 		meta.setLore(lore);
 		meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		factions.setItemMeta(meta);
+		lifesteal.setItemMeta(meta);
 
 		// Set menu items
-		selector.setItem(13, factions);
+		selector.setItem(13, lifesteal);
 	}
 
 	public static Inventory getServerSelector() {
